@@ -10,11 +10,11 @@ interface IProps {
   props: {
     task: ITask;
     deleteHandler: (id: string) => void;
-    editHandler: (id: string, title: string, description: string, complete: boolean) => void;
+    editHandler: (task: ITask) => void;
   };
 }
 
-const style = {
+const modalStyle = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
@@ -34,12 +34,23 @@ export const Item = ({ props }: IProps) => {
   const [titleModal, setTitleModal] = useState<string>(title);
   const [descriptionModal, setDescriptionModal] = useState<string>(description);
   const [completeModal, setCompleteModal] = useState<boolean>(complete);
+  const [hasChanged, setChange] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
+
   const modalOpen = () => setOpen(true);
   const modalClose = () => setOpen(false);
 
   const editTask = () => {
-    editHandler(id, titleModal, descriptionModal, completeModal);
+    const localDesc: string = descriptionModal.trim() === '' ? 'Sem descrição' : descriptionModal;
+
+    if (hasChanged) {
+      editHandler({
+        id,
+        title: titleModal,
+        description: localDesc,
+        complete: completeModal,
+      });
+    }
 
     if (open) {
       modalClose();
@@ -71,12 +82,13 @@ export const Item = ({ props }: IProps) => {
           Editar tarefa
         </Button>
         <Modal open={open} onClose={modalClose}>
-          <Box sx={style}>
+          <Box sx={modalStyle}>
             <Typography variant='h6'>Editar tarefa</Typography>
             <div style={{ margin: '15px' }}>
               <TextField
                 value={titleModal}
                 onChange={(e) => {
+                  setChange(true);
                   setTitleModal(e.target.value);
                 }}
                 size='small'
@@ -87,6 +99,7 @@ export const Item = ({ props }: IProps) => {
               <TextField
                 value={descriptionModal}
                 onChange={(e) => {
+                  setChange(true);
                   setDescriptionModal(e.target.value);
                 }}
                 size='small'

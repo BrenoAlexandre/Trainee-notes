@@ -11,22 +11,21 @@ const taskSchema = yup.object().shape({
 });
 
 interface IForm {
-  appSetTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
+  createTask: (data: ITask) => void;
 }
 
-export const Form = ({ appSetTasks }: IForm) => {
+export const Form = ({ createTask }: IForm) => {
   const submitHandler = async (values: { title: string; description: string }) => {
-    let localDesc: string = values.description.trim();
-    if (localDesc === '') localDesc = 'Sem descrição';
+    const { title, description } = values;
 
-    const user = { id: 'ea0474bd-e70f-407c-83d7-17234685cc08', email: 'temp@mail.com' };
+    const localDesc: string = description.trim() === '' ? 'Sem descrição' : description;
+
+    const user = '3fb282fd-32df-4322-b6bd-404a165ba4b0';
     //TODO Usuário temporário
 
-    const data: ITask = await TasksService.create(values.title, localDesc, user);
+    const data: ITask = await TasksService.create(title, localDesc, user);
 
-    appSetTasks((tasks) => {
-      return [...tasks, data];
-    });
+    createTask(data);
   };
 
   return (

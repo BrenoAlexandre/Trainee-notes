@@ -18,10 +18,11 @@ import TasksService from '../../../../services/tasks.service';
 
 interface IListProps {
   tasks: ITask[];
-  appSetTasks: React.Dispatch<React.SetStateAction<ITask[]>>;
+  editTask: (data: ITask) => void;
+  deleteTask: (id: string) => void;
 }
 
-export const List = ({ tasks, appSetTasks }: IListProps) => {
+export const List = ({ tasks, editTask, deleteTask }: IListProps) => {
   const [filter, setFilter] = useState(0);
 
   const pendantTasks = tasks.filter((t) => {
@@ -35,28 +36,12 @@ export const List = ({ tasks, appSetTasks }: IListProps) => {
 
   const deleteHandler = (id: string) => {
     TasksService.delete(id);
-
-    let newTaskList = tasks.filter((task) => {
-      return task.id !== id;
-    });
-
-    appSetTasks(newTaskList);
+    deleteTask(id);
   };
 
-  const editHandler = (id: string, title: string, description: string, complete: boolean) => {
-    TasksService.update(id, title, description, complete);
-
-    const newTaskList = tasks.map((task) => {
-      if (task.id === id) {
-        task.title = title;
-        task.description = description;
-        task.complete = complete;
-      }
-
-      return task;
-    });
-
-    appSetTasks(newTaskList);
+  const editHandler = (task: ITask) => {
+    TasksService.update(task);
+    editTask(task);
   };
 
   const filterHandler = (filter: number) => {

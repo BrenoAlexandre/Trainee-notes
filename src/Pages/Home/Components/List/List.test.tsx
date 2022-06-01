@@ -8,7 +8,7 @@ describe('Testing List component', () => {
     it('Should render the placeholder text', async () => {
       let tasksMock: ITask[] = [];
 
-      render(<List tasks={tasksMock} appSetTasks={() => {}} />);
+      render(<List tasks={tasksMock} editTask={() => {}} deleteTask={() => {}} />);
 
       const totalTasksCounter = screen.getByTestId('totalTasks').textContent;
       const emptyListText = screen.getByTestId('emptyListText');
@@ -24,28 +24,32 @@ describe('Testing List component', () => {
         title: 'Tarefa 1',
         description: 'Tarefa diária',
         complete: false,
+        user: '3fb282fd-32df-4322-b6bd-404a165ba4b0',
       },
       {
         id: '122',
         title: 'Tarefa 2',
         description: 'Comprar verdura',
         complete: false,
+        user: '3fb282fd-32df-4322-b6bd-404a165ba4b0',
       },
       {
         id: '112',
         title: 'Tarefa 3',
         description: 'Passear com o Dog',
         complete: true,
+        user: '3fb282fd-32df-4322-b6bd-404a165ba4b0',
       },
       {
         id: '111',
         title: 'Tarefa 4',
         description: 'Treinar',
         complete: true,
+        user: '3fb282fd-32df-4322-b6bd-404a165ba4b0',
       },
     ];
     it('Should render the list', async () => {
-      render(<List tasks={listMock} appSetTasks={() => {}} />);
+      render(<List tasks={listMock} editTask={() => {}} deleteTask={() => {}} />);
 
       const totalTasksCounter = screen.getByTestId('totalTasks').textContent;
 
@@ -53,7 +57,7 @@ describe('Testing List component', () => {
     });
 
     it('Should render the filtered list', async () => {
-      render(<List tasks={listMock} appSetTasks={() => {}} />);
+      render(<List tasks={listMock} editTask={() => {}} deleteTask={() => {}} />);
 
       const totalTasksCounter = screen.getByTestId('totalTasks').textContent;
       const completeTasksCounter = screen.getByTestId('completeTasks').textContent;

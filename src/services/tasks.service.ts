@@ -1,46 +1,41 @@
 import HttpClient from './httpClient';
 import { ITask } from '../Interfaces/ITask';
-import { IUser } from '../Interfaces/IUser';
 
+const baseRoute = 'api/v1/tasks';
 class TasksService {
   static async tasks(): Promise<ITask[]> {
-    const { data } = await HttpClient.api.get<ITask[]>('/tasks');
+    const { data } = await HttpClient.api.get<ITask[]>(`${baseRoute}`);
     return data;
   }
 
   static async tasksByUser(userId: string): Promise<ITask[]> {
-    const { data } = await HttpClient.api.get(`/tasks/${userId}`);
+    const { data } = await HttpClient.api.get(`${baseRoute}/userId/${userId}`);
     return data;
   }
 
-  static async create(title: string, description: string, user: IUser): Promise<ITask> {
+  static async create(title: string, description: string, userId: string): Promise<ITask> {
     const obj = {
       title,
       description,
-      user,
+      userId,
     };
 
-    const { data } = await HttpClient.api.post('/tasks', obj);
+    const { data } = await HttpClient.api.post(`${baseRoute}`, obj);
     return data;
   }
 
-  static async update(
-    id: string,
-    title: string,
-    description: string,
-    complete: boolean
-  ): Promise<void> {
+  static async update(task: ITask): Promise<void> {
     const obj = {
-      title,
-      description,
-      complete,
+      title: task.title,
+      description: task.description,
+      complete: task.complete,
     };
-    const { data } = await HttpClient.api.put(`/tasks/${id}`, obj);
+    const { data } = await HttpClient.api.put(`${baseRoute}/${task.id}`, obj);
     return data;
   }
 
   static async delete(id: string): Promise<string> {
-    const { statusText } = await HttpClient.api.delete(`/tasks/${id}`);
+    const { statusText } = await HttpClient.api.delete(`${baseRoute}/${id}`);
     return statusText;
   }
 }

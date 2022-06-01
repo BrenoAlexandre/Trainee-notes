@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { axios } from '../../services/httpClient';
+// import { useNavigate } from 'react-router-dom';
 
 export const SignUpPage = () => {
   const [name, setName] = useState('');
@@ -14,7 +13,7 @@ export const SignUpPage = () => {
     confirmation: '',
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const validate = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -56,19 +55,19 @@ export const SignUpPage = () => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    axios
-      .post('http://localhost:3333/api/v1/users/', { name, email, password })
-      .then((response) => {
-        console.log(response);
-        navigate('/login', { replace: true });
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        // Not a valid email
-        // Email has already been registered
-        // Password too short - should be 6 chars minimum
-        //? minLength={6} muito simples
-      });
+    // axios
+    //   .post('http://localhost:3333/api/v1/users/', { name, email, password })
+    //   .then((response) => {
+    //     console.log(response);
+    //     navigate('/login', { replace: true });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response.data);
+    //     // Not a valid email
+    //     // Email has already been registered
+    //     // Password too short - should be 6 chars minimum
+    //     //? minLength={6} muito simples
+    //   });
   };
 
   return (

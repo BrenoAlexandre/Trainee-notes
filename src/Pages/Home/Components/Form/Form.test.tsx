@@ -5,7 +5,7 @@ import { Form } from './index';
 
 describe('Testing Form Component', () => {
   test('The form title exists', async () => {
-    render(<Form appSetTasks={() => {}} />);
+    render(<Form createTask={() => {}} />);
 
     const formTitle = await screen.findByText('Adicione uma tarefa:');
 
@@ -13,7 +13,7 @@ describe('Testing Form Component', () => {
   });
 
   test('Tasks are being created', async () => {
-    render(<Form appSetTasks={() => {}} />);
+    render(<Form createTask={() => {}} />);
 
     const titleInput = screen.getByPlaceholderText('Titulo*');
     const descriptionInput = screen.getByPlaceholderText('Descrição');

@@ -9,7 +9,7 @@ export const LoginPage = () => {
     password: '',
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const validate = ({ name, value }: { name: string; value: string }) => {
     switch (name) {
@@ -31,16 +31,16 @@ export const LoginPage = () => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    axios
-      .post('http://localhost:3333/api/v1/users/login', { email, password })
-      .then((response) => {
-        setError({ email: '', password: '' });
+    // axios
+    //   .post('http://localhost:3333/api/v1/users/login', { email, password })
+    //   .then((response) => {
+    //     setError({ email: '', password: '' });
 
-        navigate('/', { replace: true });
-      })
-      .catch((error) => {
-        setError({ email: '', password: 'Email ou Senha inválidos' });
-      });
+    //     navigate('/', { replace: true });
+    //   })
+    //   .catch((error) => {
+    //     setError({ email: '', password: 'Email ou Senha inválidos' });
+    //   });
   };
 
   return (
