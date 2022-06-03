@@ -11,6 +11,8 @@ function Home() {
   useEffect(() => {
     let userId = '3fb282fd-32df-4322-b6bd-404a165ba4b0';
 
+    console.log('home');
+
     TasksService.tasksByUser(userId)
       .then(setTasks)
       .catch((e) => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/auth';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +10,8 @@ export const LoginPage = () => {
     password: '',
   });
 
-  // const navigate = useNavigate();
+  const { Login } = useAuth();
+  const navigate = useNavigate();
 
   const validate = ({ name, value }: { name: string; value: string }) => {
     switch (name) {
@@ -28,25 +30,18 @@ export const LoginPage = () => {
     }
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // axios
-    //   .post('http://localhost:3333/api/v1/users/login', { email, password })
-    //   .then((response) => {
-    //     setError({ email: '', password: '' });
+    const isLogged = await Login({ email, password });
 
-    //     navigate('/', { replace: true });
-    //   })
-    //   .catch((error) => {
-    //     setError({ email: '', password: 'Email ou Senha inválidos' });
-    //   });
+    if (isLogged) navigate('/');
   };
 
   return (
     <div>
       Hello login
-      <form method='post' onSubmit={(e) => submitHandler(e)}>
+      <form onSubmit={submitHandler}>
         <input
           type='email'
           name='email'
